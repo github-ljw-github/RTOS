@@ -1,0 +1,39 @@
+#ifndef __SERIALPORT_H
+#define __SERIALPORT_H
+#include "stm32f10x.h"
+#include <stdlib.h>
+#include <stdio.h>
+class SerialPort
+{	
+public:
+		SerialPort(){}
+		SerialPort(SerialPort &ins){}
+		virtual ~SerialPort(){}
+		SerialPort& operator<<(const char ch);
+		SerialPort& operator<<(const char *str);
+		SerialPort& operator<<(const int num);
+		SerialPort& operator<<(const unsigned int num);
+		SerialPort& operator<<(const long num);
+		SerialPort& operator<<(const unsigned long num);
+		SerialPort& operator<<(const long long num);
+		SerialPort& operator<<(const unsigned long long num);
+		SerialPort& operator<<(const float num);
+		SerialPort& operator<<(const double num);
+protected:
+		virtual SerialPort& write(const char ch) = 0;
+		virtual void pinConfig() = 0;
+		virtual void usartConfig() = 0;
+};
+
+class SerialPort1 : public SerialPort
+{
+public:
+		SerialPort1();
+		SerialPort1(SerialPort1& ins){}
+		virtual ~SerialPort1(){}
+private:
+		virtual SerialPort& write(const char ch);
+		virtual void pinConfig();
+		virtual void usartConfig();
+};
+#endif//__SERIALPORT_H
